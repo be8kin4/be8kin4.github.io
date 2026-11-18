@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Light Shop — Lighting for every room</title>
 <meta name="description" content="Light Shop: designer lamps, pendants and smart bulbs that make every room glow.">
+<link rel="canonical" href="https://be8kin4.com/">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<meta property="og:image" content="https://be8kin4.com/logo.svg">
+<meta property="og:title" content="Light Shop — Lighting for every room">
+<meta property="og:description" content="Designer lamps, pendants and smart bulbs that make every room glow.">
+<meta property="og:url" content="https://be8kin4.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -68,7 +74,9 @@
   }
   .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; gap: 16px; }
   .logo { display: flex; align-items: center; gap: 10px; font: 600 22px "Fraunces", serif; }
-  .logo-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px 4px var(--glow); }
+  .logo-mark { width: 30px; height: 30px; color: var(--text); overflow: visible; }
+  .logo-bulb { fill: var(--accent); filter: drop-shadow(0 0 4px var(--accent)); transition: filter .3s; }
+  .logo:hover .logo-bulb { filter: drop-shadow(0 0 8px var(--accent)); }
   .nav-links { display: flex; gap: 28px; font-size: 15px; color: var(--muted); }
   .nav-links a:hover { color: var(--text); }
   .nav-actions { display: flex; align-items: center; gap: 10px; }
@@ -279,7 +287,7 @@
 
 <header>
   <div class="wrap nav">
-    <a href="#" class="logo"><span class="logo-dot"></span>Light Shop</a>
+    <a href="#" class="logo"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><line x1="16" y1="2" x2="16" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5.5 21 C5.5 14.6 10.2 10 16 10 C21.8 10 26.5 14.6 26.5 21 Z" fill="currentColor"/><circle class="logo-bulb" cx="16" cy="24" r="4"/></svg>be8kin4</a>
     <nav class="nav-links">
       <a href="#categories">Categories</a>
       <a href="#shop">Shop</a>
@@ -439,8 +447,9 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a href="#" class="logo" style="color:var(--text)"><span class="logo-dot"></span>Light Shop</a>
+        <a href="#" class="logo" style="color:var(--text)"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><line x1="16" y1="2" x2="16" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5.5 21 C5.5 14.6 10.2 10 16 10 C21.8 10 26.5 14.6 26.5 21 Z" fill="currentColor"/><circle class="logo-bulb" cx="16" cy="24" r="4"/></svg>be8kin4</a>
         <p style="margin-top:14px;max-width:280px">Warm, thoughtful lighting for every room, delivered to your door.</p>
+        <p style="margin-top:10px"><a href="mailto:help@be8kin4.com">help@be8kin4.com</a></p>
       </div>
       <div><h4>Shop</h4><ul><li><a href="#shop">Pendants</a></li><li><a href="#shop">Table lamps</a></li><li><a href="#shop">Floor lamps</a></li><li><a href="#shop">Smart bulbs</a></li></ul></div>
       <div><h4>Help</h4><ul><li><a href="policy.html#shipping">Delivery</a></li><li><a href="policy.html#returns">Returns</a></li><li><a href="policy.html#warranty">Warranty</a></li><li><a href="policy.html#contact">Contact</a></li></ul></div>
