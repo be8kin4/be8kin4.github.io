@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Light Shop — Lighting for every room</title>
+<meta name="description" content="Light Shop: designer lamps, pendants and smart bulbs that make every room glow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf6ef;
+    --surface: #ffffff;
+    --surface-2: #f3ece0;
+    --text: #1d1a16;
+    --muted: #6b6359;
+    --line: #e6ddcf;
+    --accent: #e8a33d;
+    --accent-ink: #1d1a16;
+    --glow: rgba(255, 196, 92, .55);
+    --radius: 18px;
+    --shadow: 0 10px 30px rgba(60, 40, 10, .08);
+  }
+  :root[data-theme="dark"] {
+    --bg: #12100d;
+    --surface: #1b1814;
+    --surface-2: #231f19;
+    --text: #f4ede2;
+    --muted: #a69c8e;
+    --line: #332d25;
+    --accent: #ffbe55;
+    --accent-ink: #1d1a16;
+    --glow: rgba(255, 190, 85, .35);
+    --shadow: 0 10px 30px rgba(0, 0, 0, .4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background .5s, color .5s;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; line-height: 1.15; }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; }
+  .wrap { width: min(1160px, 100% - 32px); margin-inline: auto; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 26px; border-radius: 999px; border: 1px solid transparent;
+    font: 600 15px/1 "Inter", sans-serif; cursor: pointer; transition: transform .2s, box-shadow .2s, background .2s;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 6px 24px var(--glow); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 34px var(--glow); }
+  .btn-ghost { border-color: var(--line); background: transparent; color: var(--text); }
+  .btn-ghost:hover { background: var(--surface-2); }
+  .eyebrow { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+  /* Nav */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; gap: 16px; }
+  .logo { display: flex; align-items: center; gap: 10px; font: 600 22px "Fraunces", serif; }
+  .logo-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px 4px var(--glow); }
+  .nav-links { display: flex; gap: 28px; font-size: 15px; color: var(--muted); }
+  .nav-links a:hover { color: var(--text); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn {
+    position: relative; width: 42px; height: 42px; border-radius: 50%;
+    display: grid; place-items: center; border: 1px solid var(--line);
+    background: var(--surface); color: var(--text); cursor: pointer;
+  }
+  .cart-count {
+    position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px;
+    border-radius: 999px; background: var(--accent); color: var(--accent-ink);
+    font-size: 11px; font-weight: 700; display: grid; place-items: center;
+    transform: scale(0); transition: transform .25s;
+  }
+  .cart-count.show { transform: scale(1); }
+  .cart-count.bump { animation: bump .35s; }
+  @keyframes bump { 50% { transform: scale(1.4); } }
+
+  /* Hero */
+  .hero { position: relative; padding: 72px 0 96px; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(40px, 6vw, 72px); margin: 14px 0 20px; }
+  .hero h1 em { font-style: italic; color: var(--accent); text-shadow: 0 0 30px var(--glow); }
+  .hero p.lead { font-size: 18px; color: var(--muted); max-width: 520px; margin-bottom: 32px; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-stats { display: flex; gap: 36px; margin-top: 44px; flex-wrap: wrap; }
+  .hero-stats strong { display: block; font: 600 28px "Fraunces", serif; }
+  .hero-stats span { font-size: 14px; color: var(--muted); }
+
+  .lamp-stage {
+    position: relative; aspect-ratio: 1 / 1.1; border-radius: 28px;
+    background: radial-gradient(circle at 50% 46%, var(--glow), transparent 60%), var(--surface-2);
+    border: 1px solid var(--line); overflow: hidden;
+    display: grid; place-items: start center;
+    transition: background .5s;
+  }
+  .lamp-stage.off { background: var(--surface-2); }
+  .lamp { position: relative; display: flex; flex-direction: column; align-items: center; animation: sway 6s ease-in-out infinite; transform-origin: top center; }
+  @keyframes sway { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+  .cord { width: 2px; height: 120px; background: var(--muted); }
+  .shade {
+    width: 200px; height: 110px; background: var(--text);
+    clip-path: polygon(22% 0, 78% 0, 100% 100%, 0 100%);
+    border-radius: 6px;
+  }
+  .bulb {
+    width: 54px; height: 54px; border-radius: 50%; margin-top: -26px;
+    background: #fff4d6; box-shadow: 0 0 40px 18px var(--glow), 0 0 120px 60px var(--glow);
+    transition: box-shadow .4s, background .4s;
+  }
+  .lamp-stage.off .bulb { background: #8a8174; box-shadow: none; }
+  .beam {
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    width: 420px; height: 420px; margin-top: -30px;
+    background: linear-gradient(to bottom, var(--glow), transparent 75%);
+    clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+    opacity: .7; pointer-events: none; transition: opacity .4s;
+  }
+  .lamp-stage.off .beam { opacity: 0; }
+  .switch {
+    position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 16px 8px 8px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow);
+    font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text);
+  }
+  .switch .knob { width: 44px; height: 24px; border-radius: 999px; background: var(--accent); position: relative; transition: background .3s; }
+  .switch .knob::after { content: ""; position: absolute; top: 3px; left: 23px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: left .3s; }
+  .lamp-stage.off .switch .knob { background: var(--line); }
+  .lamp-stage.off .switch .knob::after { left: 3px; }
+
+  /* Sections */
+  section { padding: 88px 0; }
+  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+  .section-head h2 { font-size: clamp(30px, 4vw, 44px); margin-top: 8px; }
+  .section-head p { color: var(--muted); max-width: 420px; }
+
+  /* Categories */
+  .cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .cat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 26px; display: flex; flex-direction: column; gap: 18px; transition: transform .25s, box-shadow .25s;
+  }
+  .cat:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .cat-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--surface-2); display: grid; place-items: center; color: var(--accent); }
+  .cat h3 { font-size: 20px; }
+  .cat span { font-size: 14px; color: var(--muted); }
+
+  /* Filters + Products */
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+    color: var(--muted); font: 500 14px "Inter", sans-serif; cursor: pointer;
+  }
+  .chip.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .product {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s;
+  }
+  .product:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .product-art {
+    aspect-ratio: 1; display: grid; place-items: center; position: relative;
+    background: radial-gradient(circle at 50% 55%, var(--glow), transparent 55%), var(--surface-2);
+  }
+  .tag { position: absolute; top: 14px; left: 14px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); }
+  .product-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .product-body h3 { font-size: 18px; }
+  .product-body .type { font-size: 13px; color: var(--muted); }
+  .product-foot { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 14px; }
+  .price { font-weight: 600; font-size: 18px; }
+  .price s { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 6px; }
+  .add {
+    width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--text); color: var(--bg);
+    font-size: 22px; line-height: 1; cursor: pointer; transition: transform .2s, background .2s;
+  }
+  .add:hover { transform: scale(1.08); }
+  .add.added { background: var(--accent); color: var(--accent-ink); }
+
+  /* Features */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .feature { padding: 30px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+  .feature .num { font: 600 15px "Fraunces", serif; color: var(--accent); }
+  .feature h3 { font-size: 22px; margin: 10px 0 8px; }
+  .feature p { color: var(--muted); }
+
+  /* Banner */
+  .banner {
+    border-radius: 28px; padding: 64px 56px; position: relative; overflow: hidden;
+    background: #1d1a16; color: #f4ede2;
+    display: grid; grid-template-columns: 1.2fr .8fr; gap: 32px; align-items: center;
+  }
+  .banner::before {
+    content: ""; position: absolute; right: -120px; top: -120px; width: 460px; height: 460px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,190,85,.45), transparent 65%);
+  }
+  .banner h2 { font-size: clamp(30px, 4vw, 46px); position: relative; }
+  .banner p { color: #c9bfb0; margin-top: 12px; position: relative; }
+  .banner .code { position: relative; justify-self: end; text-align: center; }
+  .banner .code strong { display: block; font: 600 64px "Fraunces", serif; color: #ffbe55; }
+  .banner .code button { margin-top: 10px; }
+  .banner .btn-ghost { color: #f4ede2; border-color: #4a4237; }
+  .banner .btn-ghost:hover { background: #2a251f; }
+
+  /* Testimonials */
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .quote { padding: 30px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 18px; }
+  .stars { color: var(--accent); letter-spacing: 2px; }
+  .quote p { font-family: "Fraunces", serif; font-size: 19px; line-height: 1.45; }
+  .who { display: flex; align-items: center; gap: 12px; margin-top: auto; font-size: 14px; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; font-weight: 600; color: var(--accent); }
+  .who span { color: var(--muted); display: block; }
+
+  /* Newsletter */
+  .newsletter { text-align: center; max-width: 620px; margin-inline: auto; }
+  .newsletter h2 { font-size: clamp(30px, 4vw, 44px); margin: 8px 0 12px; }
+  .newsletter p { color: var(--muted); }
+  .news-form { display: flex; gap: 10px; margin-top: 28px; padding: 6px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+  .news-form input { flex: 1; min-width: 0; border: none; background: transparent; padding: 0 18px; font: 15px "Inter", sans-serif; color: var(--text); outline: none; }
+  .form-msg { margin-top: 14px; font-size: 14px; color: var(--accent); min-height: 22px; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); padding: 56px 0 32px; color: var(--muted); font-size: 14px; }
+  .foot-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 32px; }
+  .foot-grid h4 { color: var(--text); font-size: 15px; margin-bottom: 14px; }
+  .foot-grid ul { list-style: none; display: grid; gap: 8px; }
+  .foot-grid a:hover { color: var(--text); }
+  .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 120px);
+    background: var(--text); color: var(--bg); padding: 12px 22px; border-radius: 999px;
+    font-size: 14px; font-weight: 500; transition: transform .35s; z-index: 100; white-space: nowrap;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) {
+    .hero-grid, .banner { grid-template-columns: 1fr; }
+    .banner .code { justify-self: start; text-align: left; }
+    .cats, .products { grid-template-columns: repeat(2, 1fr); }
+    .features, .quotes { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .hero { padding: 40px 0 64px; }
+    section { padding: 64px 0; }
+    .cats, .products { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .product-body { padding: 14px; }
+    .product-body h3 { font-size: 16px; }
+    .banner { padding: 40px 24px; }
+    .news-form { flex-direction: column; border-radius: 20px; }
+    .news-form input { padding: 14px 16px; }
+    .shade { width: 160px; height: 90px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo"><span class="logo-dot"></span>Light Shop</a>
+    <nav class="nav-links">
+      <a href="#categories">Categories</a>
+      <a href="#shop">Shop</a>
+      <a href="#why">Why us</a>
+      <a href="#reviews">Reviews</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">New autumn collection</span>
+        <h1>Light that makes a house feel like <em>home</em>.</h1>
+        <p class="lead">Designer pendants, table lamps and smart bulbs, picked for warmth and built to last. Free delivery on orders over $75.</p>
+        <div class="hero-cta">
+          <a href="#shop" class="btn btn-primary">Shop the collection →</a>
+          <a href="#categories" class="btn btn-ghost">Browse by room</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>1,200+</strong><span>Lighting pieces</span></div>
+          <div><strong>4.9★</strong><span>From 18k reviews</span></div>
+          <div><strong>5 yr</strong><span>Warranty</span></div>
+        </div>
+      </div>
+      <div class="lamp-stage reveal" id="stage">
+        <div class="lamp">
+          <div class="cord"></div>
+          <div class="shade"></div>
+          <div class="bulb"></div>
+          <div class="beam"></div>
+        </div>
+        <button class="switch" id="switch" aria-pressed="true">
+          <span class="knob"></span><span id="switchLabel">Lights on</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <section id="categories">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Categories</span><h2>Find your glow</h2></div>
+        <p>From statement pendants over the dining table to soft bedside lamps, there's light for every corner.</p>
+      </div>
+      <div class="cats">
+        <a href="#shop" class="cat reveal" data-filter="pendant">
+          <div class="cat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v6"/><path d="M5 16a7 7 0 0 1 14 0z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></div>
+          <div><h3>Pendants</h3><span>86 products</span></div>
+        </a>
+        <a href="#shop" class="cat reveal" data-filter="table">
+          <div class="cat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3h8l3 8H5z"/><path d="M12 11v9"/><path d="M8 21h8"/></svg></div>
+          <div><h3>Table lamps</h3><span>124 products</span></div>
+        </a>
+        <a href="#shop" class="cat reveal" data-filter="floor">
+          <div class="cat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 2h6l2 6H7z"/><path d="M12 8v13"/><path d="M8 22h8"/></svg></div>
+          <div><h3>Floor lamps</h3><span>58 products</span></div>
+        </a>
+        <a href="#shop" class="cat reveal" data-filter="smart">
+          <div class="cat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></div>
+          <div><h3>Smart bulbs</h3><span>42 products</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="shop" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Bestsellers</span><h2>Loved this season</h2></div>
+        <div class="filters" id="filters">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="pendant">Pendants</button>
+          <button class="chip" data-filter="table">Table</button>
+          <button class="chip" data-filter="floor">Floor</button>
+          <button class="chip" data-filter="smart">Smart</button>
+        </div>
+      </div>
+      <div class="products" id="products"></div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="why" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Why Light Shop</span><h2>Better light, fewer worries</h2></div>
+      </div>
+      <div class="features">
+        <div class="feature reveal"><span class="num">01</span><h3>Free lighting advice</h3><p>Send us a photo of your room and our designers will suggest fittings, bulb temperatures and placement, at no charge.</p></div>
+        <div class="feature reveal"><span class="num">02</span><h3>Energy-smart by default</h3><p>Every bulb we sell is LED, using up to 85% less energy and lasting 15+ years of everyday use.</p></div>
+        <div class="feature reveal"><span class="num">03</span><h3>Easy 60-day returns</h3><p>Not the right glow? Send it back within 60 days. Returns are free, and so is the shipping both ways.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promo banner -->
+  <section>
+    <div class="wrap">
+      <div class="banner reveal">
+        <div>
+          <span class="eyebrow" style="color:#c9bfb0">Limited time</span>
+          <h2>Brighten up for less this autumn</h2>
+          <p>Take 20% off your first order of any pendant or floor lamp. Ends Sunday.</p>
+        </div>
+        <div class="code">
+          <strong>20% OFF</strong>
+          <button class="btn btn-ghost" id="copyCode">Copy code: GLOW20</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Reviews</span><h2>Homes we've lit up</h2></div>
+      </div>
+      <div class="quotes">
+        <div class="quote reveal"><div class="stars">★★★★★</div><p>"The Halo pendant completely changed our dining room. Dinner feels like a restaurant now."</p><div class="who"><div class="avatar">MR</div><div>Maya R.<span>Verified buyer</span></div></div></div>
+        <div class="quote reveal"><div class="stars">★★★★★</div><p>"Their designer sent me a full plan for my studio flat within a day. Brilliant service."</p><div class="who"><div class="avatar">JT</div><div>Jordan T.<span>Verified buyer</span></div></div></div>
+        <div class="quote reveal"><div class="stars">★★★★★</div><p>"The smart bulbs were set up in two minutes, and the warm dim setting is perfect for evenings."</p><div class="who"><div class="avatar">AS</div><div>Alex S.<span>Verified buyer</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section style="padding-top:0">
+    <div class="wrap newsletter reveal">
+      <span class="eyebrow">Stay in the glow</span>
+      <h2>Get 10% off your first order</h2>
+      <p>New arrivals, lighting tips and members-only offers, once a month.</p>
+      <form class="news-form" id="newsForm" novalidate>
+        <input type="email" id="email" placeholder="Your email address" aria-label="Email address" required>
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+      </form>
+      <div class="form-msg" id="formMsg" role="status"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="logo" style="color:var(--text)"><span class="logo-dot"></span>Light Shop</a>
+        <p style="margin-top:14px;max-width:280px">Warm, thoughtful lighting for every room, delivered to your door.</p>
+      </div>
+      <div><h4>Shop</h4><ul><li><a href="#shop">Pendants</a></li><li><a href="#shop">Table lamps</a></li><li><a href="#shop">Floor lamps</a></li><li><a href="#shop">Smart bulbs</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="policy.html#shipping">Delivery</a></li><li><a href="policy.html#returns">Returns</a></li><li><a href="policy.html#warranty">Warranty</a></li><li><a href="policy.html#contact">Contact</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Design service</a></li><li><a href="#">Careers</a></li><li><a href="#">Journal</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Light Shop. All rights reserved.</span>
+      <span><a href="policy.html#privacy">Privacy</a> · <a href="policy.html#terms">Terms</a> · <a href="policy.html#cookies">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Product art: simple SVG illustrations per type
+  const art = {
+    pendant: c => `<svg width="120" height="140" viewBox="0 0 120 140"><line x1="60" y1="0" x2="60" y2="50" stroke="currentColor" stroke-width="2"/><path d="M20 95 Q60 30 100 95 Z" fill="${c}"/><circle cx="60" cy="98" r="10" fill="#fff4d6"/></svg>`,
+    table: c => `<svg width="120" height="140" viewBox="0 0 120 140"><path d="M35 20 H85 L100 70 H20 Z" fill="${c}"/><rect x="57" y="70" width="6" height="45" fill="currentColor"/><rect x="38" y="115" width="44" height="8" rx="4" fill="currentColor"/></svg>`,
+    floor: c => `<svg width="120" height="150" viewBox="0 0 120 150"><path d="M42 10 H78 L90 45 H30 Z" fill="${c}"/><rect x="58" y="45" width="4" height="90" fill="currentColor"/><ellipse cx="60" cy="138" rx="24" ry="5" fill="currentColor"/></svg>`,
+    smart: c => `<svg width="110" height="140" viewBox="0 0 110 140"><circle cx="55" cy="55" r="38" fill="${c}"/><rect x="40" y="90" width="30" height="10" fill="currentColor"/><rect x="42" y="102" width="26" height="8" fill="currentColor"/><rect x="46" y="112" width="18" height="10" rx="3" fill="currentColor"/></svg>`
+  };
+
+  const products = [
+    { name: "Halo Dome", type: "pendant", label: "Pendant · Brass", price: 189, was: 229, color: "#c8963e", tag: "Bestseller" },
+    { name: "Nordic Arc", type: "floor", label: "Floor lamp · Oak", price: 249, color: "#d9cbb3" },
+    { name: "Mori Linen", type: "table", label: "Table lamp · Linen", price: 89, color: "#e8dcc4", tag: "New" },
+    { name: "Glow Pro A60", type: "smart", label: "Smart bulb · 2-pack", price: 39, was: 49, color: "#ffd27a" },
+    { name: "Orbit Opal", type: "pendant", label: "Pendant · Opal glass", price: 149, color: "#f1ece4" },
+    { name: "Tilda Mini", type: "table", label: "Table lamp · Terracotta", price: 69, color: "#c4704a" },
+    { name: "Tall Reed", type: "floor", label: "Floor lamp · Black", price: 199, color: "#3a3530", tag: "New" },
+    { name: "Ambient Strip", type: "smart", label: "Smart bulb · Colour", price: 29, color: "#f5a85e" }
+  ];
+
+  const grid = document.getElementById("products");
+  const cartEl = document.getElementById("cartCount");
+  const toast = document.getElementById("toast");
+  let cart = 0, toastTimer;
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+  }
+
+  function render(filter = "all") {
+    grid.innerHTML = products
+      .filter(p => filter === "all" || p.type === filter)
+      .map(p => `
+        <article class="product">
+          <div class="product-art" style="color:var(--text)">
+            ${p.tag ? `<span class="tag">${p.tag}</span>` : ""}
+            ${art[p.type](p.color)}
+          </div>
+          <div class="product-body">
+            <h3>${p.name}</h3>
+            <span class="type">${p.label}</span>
+            <div class="product-foot">
+              <span class="price">$${p.price}${p.was ? `<s>$${p.was}</s>` : ""}</span>
+              <button class="add" data-name="${p.name}" aria-label="Add ${p.name} to cart">+</button>
+            </div>
+          </div>
+        </article>`).join("");
+  }
+  render();
+
+  grid.addEventListener("click", e => {
+    const btn = e.target.closest(".add");
+    if (!btn) return;
+    cart++;
+    cartEl.textContent = cart;
+    cartEl.classList.add("show");
+    cartEl.classList.remove("bump"); void cartEl.offsetWidth; cartEl.classList.add("bump");
+    btn.classList.add("added"); btn.textContent = "✓";
+    setTimeout(() => { btn.classList.remove("added"); btn.textContent = "+"; }, 1200);
+    showToast(`${btn.dataset.name} added to cart`);
+  });
+
+  // Filters
+  const chips = document.querySelectorAll(".chip");
+  function setFilter(f) {
+    chips.forEach(c => c.classList.toggle("active", c.dataset.filter === f));
+    render(f);
+  }
+  chips.forEach(c => c.addEventListener("click", () => setFilter(c.dataset.filter)));
+  document.querySelectorAll(".cat").forEach(c => c.addEventListener("click", () => setFilter(c.dataset.filter)));
+
+  // Lamp switch
+  const stage = document.getElementById("stage");
+  const sw = document.getElementById("switch");
+  sw.addEventListener("click", () => {
+    const off = stage.classList.toggle("off");
+    sw.setAttribute("aria-pressed", String(!off));
+    document.getElementById("switchLabel").textContent = off ? "Lights off" : "Lights on";
+  });
+
+  // Theme
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("lightshop-theme"); if (t) root.dataset.theme = t; } catch (e) {}
+  if (!root.dataset.theme && matchMedia("(prefers-color-scheme: dark)").matches) root.dataset.theme = "dark";
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+    try { localStorage.setItem("lightshop-theme", root.dataset.theme); } catch (e) {}
+  });
+
+  // Promo code
+  document.getElementById("copyCode").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText("GLOW20"); showToast("Code GLOW20 copied"); }
+    catch (e) { showToast("Your code: GLOW20"); }
+  });
+
+  // Newsletter
+  document.getElementById("newsForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const email = document.getElementById("email");
+    const msg = document.getElementById("formMsg");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { msg.textContent = "Please enter a valid email address."; return; }
+    msg.textContent = "Thanks! Your 10% code is on its way.";
+    email.value = "";
+  });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
